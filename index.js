@@ -228,3 +228,54 @@ const FlavorsModificador = map(
 
 const atributos = map(view(flavorPath), FlavorsModificador)
 console.log(atributos) */
+
+import { map, compose, lensProp, over, propEq, T, cond, identity, match, add, not, empty, isEmpty, propSatisfies } from 'ramda';
+
+const blackSabbath = { name: 'Black Sabbath', category: 'Heavy Metal', price: 140, purchased: 9376, total: 20000 }
+const defLeppard = { name: 'Def Leppard', category: 'Rock', price: 125, purchased: 8423, total: 15000 }
+const greenDay = { name: 'Green Day', category: 'Punk Rock', price: 80, purchased: 1425, total: 15000 }
+const acdc = { name: 'AC/DC', category: 'Hard Rock', price: 200, purchased: 24765, total: 25000 }
+const rollingStones = { name: 'The Rolling Stones', category: 'Rock', price: 130, purchased: 5671, total: 25000 }
+
+const nextConcerts = [greenDay, defLeppard, blackSabbath, acdc, rollingStones]
+
+//Lenses
+const priceLens = lensProp('price')
+const radioLens = lensProp('radio')
+const purchasedLens = lensProp('purchased')
+
+//Discounts
+const calculateDiscount = perc => amt => amt - amt * (perc / 100)
+const discount = d => over(priceLens, calculateDiscount(d))
+const fivePercentDiscount = discount(5)
+const tenPercentDiscount = discount(10)
+const twentyPercentDiscount = discount(20)
+
+//Other transformations not related with the price
+const includeRadioAds = over(radioLens, T)
+const partnershipRadioTickets = over(purchasedLens, add(300))
+
+//Campaings predicates
+const isAlmostFull = ({ total, purchased }) => total - purchased < 1000
+const isGreenDay = propEq('name', 'Green Day')
+const containsRock = compose(not, isEmpty, match(/(rock)/gi))
+const hasRockCategory = propSatisfies(containsRock, 'category')
+
+//Special campaings
+const lastTicketsCampaing = compose(twentyPercentDiscount, includeRadioAds)
+const radioRockCampaing = compose(fivePercentDiscount, includeRadioAds, partnershipRadioTickets)
+const greenDayCampaing = tenPercentDiscount
+
+//Map campaings with its transformations
+const configureCampaings = cond([
+    [isAlmostFull, lastTicketsCampaing],
+    [isGreenDay, greenDayCampaing],
+    [hasRockCategory, radioRockCampaing],
+    [T, identity]
+])
+
+//Apply the campaings to all the concerts
+const applyCampaings = map(configureCampaings)
+
+//Run it!
+applyCampaings(nextConcerts)
