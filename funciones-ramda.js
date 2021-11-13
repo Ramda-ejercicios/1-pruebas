@@ -1,201 +1,267 @@
-set title "muestra el nombre del archivo en la ventana de la terminal
-set number "muestra los numeros de las lineas
-set mouse=a "permite la integracion del mouse
-set cursorline "resalta la linea actual
-"set colorcolumn=120 "muestra la columna limite a 120 caracteres
-set numberwidth=1
-set clipboard=unnamedplus
-syntax enable
-set showcmd
-set ruler
-set encoding=utf-8
-set showmatch
-set sw=2
-set relativenumber
-set laststatus=2
-"set noshowmode "permite ocultar el texto que indica el modo
-set termguicolors  " Activa true colors en la terminal
-set updatetime=250 " actualiza la barra lateral cada 250 milisegundos
-call plug#begin('~/.vim/plugged')
-
-" temas
-Plug 'morhetz/gruvbox'
-
-"IDE
-Plug 'easymotion/vim-easymotion'
-"Plug 'scrooloose/nerdtree'
-Plug 'christoomey/vim-tmux-navigator'
-
-Plug 'vim-airline/vim-airline' "barra de estado con intregracion varios pluggins
-Plug 'vim-airline/vim-airline-themes'  " Temas para airline
-Plug 'Yggdroot/indentLine' " muestra lineas verticales en espaciados
-
-"AUTO COMPLETADO COC
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-"Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
-
-"motor analizador de codigo
-Plug 'w0rp/ale'
-
-"resaltado de sintaxis
-Plug 'sheerun/vim-polyglot'
-
-"inserta pares comillas,parentesis...
-Plug 'jiangmiao/auto-pairs'
-
-"navegación con tabular (para auto completar)
-Plug 'ervandew/supertab'
-
-"Busqueda incremental mejorada
-Plug 'haya14busa/incsearch.vim'
-
-" comentarios Facilita agregar y quitar comentarios.
-Plug 'scrooloose/nerdcommenter'
-
-" muestra cambios en el archivo en la columna de signos
-Plug 'airblade/vim-gitgutter'
-
-" clipboard compartido
-Plug 'christoomey/vim-system-copy'
-
-"Emmet
-Plug 'mattn/emmet-vim'
-
-" resaltado de pares tags
-Plug 'valloric/matchtagalways'
-
-"AUTOCOMPLETADO html5
-Plug 'othree/html5.vim'
-
-"autoclosetag
-Plug 'alvan/vim-closetag'
-
-"auto guardar :AutoSaveToggle:AutoSaveToggle
-Plug '907th/vim-auto-save'
-
-"permite visibilizar pestañas de buffers
-Plug 'pacha/vem-tabline'
-
-"Formateador
-Plug 'Chiel92/vim-autoformat'
-
-call plug#end()
-
-"**** TEMA INSTALADO
-colorscheme gruvbox
-let g:gruvbox_contrast_dark
-
-"**** CONFIGURACION DE BARRA NAVEGACIÓN ARCHIVOS
-"let NERDTreeQuitOnOpen=1
-"let g:NERDTreeChDirMode = 2  " Cambia el directorio actual al nodo padre actual
-
-"**** CONFIGURACION DE AIRLINE (REEMPLAZA LA BARRA INFERIOR CON NUEVO DISEÑO)
-let g:airline#extensions#tabline#enabled = 1  " Mostrar buffers abiertos (como pestañas)
-let g:airline#extensions#tabline#fnamemod = ':t'  " Mostrar sólo el nombre del archivo
-" Cargar fuente Powerline y símbolos (ver nota)
-let g:airline_powerline_fonts = 1
-
-"**** CONFIGURACION DE BARRAS VERTICALES
-" No mostrar en ciertos tipos de buffers y archivos [lineas verticales]
-let g:indentLine_fileTypeExclude = ['text', 'sh', 'help', 'terminal']
-let g:indentLine_bufNameExclude = ['NERD_tree.*', 'term:.*']
-
-"CONFIGURACION DE AUTOCOMPLETADO COC
-" autocmd FileType python let b:coc_suggest_disable = 1
-" autocmd FileType javascript let b:coc_suggest_disable = 1
-autocmd FileType scss setl iskeyword+=@-@
-imap <C-t> <Plug>(coc-snippets-expand)
-nnoremap <space>e :CocCommand explorer<CR>
-" coc config
-let g:coc_global_extensions = [
-  \ 'coc-snippets',
-  \ 'coc-pairs',
-  \ 'coc-tsserver',
-  \ 'coc-eslint', 
-  \ 'coc-prettier', 
-  \ 'coc-json',
-  \ 'coc-angular',
-  \ 'coc-explorer',
-  \ 'coc-highlight',
-  \ 'coc-html',
-  \ 'coc-css',
-  \ 'coc-html-css-support',
-  \ 'coc-cssmodules',
-  \ 'coc-scssmodules',
-  \ 'coc-htmlhint',
-  \ 'coc-tabnine',
-  \ 'coc-thrift-syntax-support',
-  \ 'coc-git',
-  \ 'coc-kite'
-  \ ]
-
-"CONFIGURACION SUPERTAB
-" Invertir direccion de navegacion (de arriba a abajo)
-let g:SuperTabDefaultCompletionType = '<c-n>'
+import * as R from 'ramda';
+import fetch from "node-fetch";
 
 
-"**** CONFIGURACION MOTOR ANALIZADOR DE CODIGO
-" Mostrar mejor mensajes de error
-let g:ale_echo_msg_error_str = 'E'
-let g:ale_echo_msg_warning_str = 'W'
-let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+//*********************MAP, aplica una función a todos los atributos de un arreglo
+const letters = ['a', 'b', 'c', 'd']
+R.map(R.toUpper)(letters)
+    // ['A', 'B', 'C', 'D']
 
 
-"**** CONFIGURACION KITE
-" todos los lenguajes que soporta Kite
-let g:kite_supported_languages = ['*']
-"para que kite solo autocomplete en los siguientes lenguajes
-"let g:kite_supported_languages = ['python', 'javascript', 'go']
+//****************Filter and reject, Filtra de acuerdo a condiciones
+R.filter(n => n % 2 === 0)([1, 2, 3, 4, 5, 6, 7, 8, 9])
+    // [2, 4, 6, 8]
+R.reject(n => n % 2 === 0)([1, 2, 3, 4, 5, 6, 7, 8, 9])
+    // [1, 3, 5, 7, 9]
+
+//*****************Reduce, aplica función a un arreglo con un argumento acumulador que almacena los resultados
+R.reduce(R.add, 0)([1, 2, 3, 4, 5, 6, 7, 8, 9])
+    // 45
 
 
-"****CONFIGURACION BUSQUEDA INCRMENTAL
-" Quitar resaltado luego de buscar
-let g:incsearch#auto_nohlsearch = 1
+R.reduce(R.concat, '')(['a', '1', 'b', '2', 'c', '3'])
+    // a1b2c3
 
-"**** CONFIGURACIONES NERDCOMMENTER
-let g:NERDSpaceDelims = 1  " Agregar un espacio después del delimitador del comentario
-let g:NERDTrimTrailingWhitespace = 1  " Quitar espacios al quitar comentario
+//Convierte un arreglo en un objeto donde los atributos son la key y los indices el valor
+R.invertObj(['one', 'two', 'three'])
+    // { 'one': 0, 'two': 1, 'three': 2 }
 
-" ****CONFIGURACIONES DE COMANDOS****
+//*****************Pluck, extrae atributo de un objeto en arreglo de objetos
+R.pluck('name')([
+        { name: 'Axl Rose', instrument: 'vocals' },
+        { name: 'Slash', instrument: 'guitar' },
+        { name: 'Izzy Stradlin', instrument: 'guitar' },
+        { name: 'Steven Adler', instrument: 'drums' },
+        { name: 'Duff McKagan', instrument: 'bass guitar' }
+    ])
+    // [ 'Axl Rose', 'Slash', 'Izzy Stradlin', 'Steven Adler', 'Duff McKagan']
 
-"indica cual es la tecla lider
-let mapleader=" "
+//**************Ordenamiento, ordena de acuerdo a función suministrada R.gt para mayor que y R.lt para menor que
+const unsorted = [2, 1, 5, 4, 3]
+R.sort(R.gt, unsorted)
+    // [1, 2, 3, 4, 5]
+R.sort(R.lt, unsorted)
+    // [5, 4, 3, 2, 1]
+R.reverse(unsorted)
+    // [3, 4, 5, 1, 2]
 
-" CONFIGURACION EASYMOTION 
-nmap <Leader>s <Plug>(easymotion-s2)
+//**************Lenses, nos proporciona herramientas para trabajar con objetos y sus atributos
+
+const gunsAndRoses = {
+    yearsActive: '1985-present',
+    origin: 'Los Angeles',
+    members: {
+        /*...*/
+    }
+}
+
+//Hace un acercamiento a la propiedad 'origin' del objeto
+const originLens = R.lensProp('origin')
+
+//Muestra la propiedad acercada con lens del objeto dado
+R.view(originLens, gunsAndRoses)
+    // 'Los Angeles'
+
+//Realiza una modificación a la propiedad acercada con lens del objeto
+R.set(originLens, 'Los Angeles, California', gunsAndRoses)
+    // {... 'origin': 'Los Angeles, California' ...}
+
+//Aplica una funcion a la propiedad acercada con lens del objeto
+R.over(originLens, R.replace('Los Angeles', 'LA'), gunsAndRoses)
+    // {... 'origin': 'LA' ...}
+
+//****************Envolve, Similar a over, aplica una colección de transformaciones sobre un objeto
+const theWho = {
+    yearsActive: '1964-1982, 1989, 1996-present',
+    origin: 'London',
+    members: {
+        singer: 'Roger Daltrey',
+        guitarist: 'Pete Townshend',
+        bassGuitarist: 'John Entwistle',
+        drummer: 'Keith Moon'
+    },
+    followers: 787989,
+    website: null,
+    active: false
+}
+
+const bandUpdates = {
+    bandName: 'The Who', // No existe la key, no aplica
+    members: {
+        drummer: R.always('Kenney Jones') // Es una función, aplica la transformación
+    },
+    followers: R.add(1500),
+    website: R.always('theWho.com'),
+    origin: 'London, UK', // No es una función, no aplica
+    active: R.not
+}
+
+R.evolve(bandUpdates, theWho)
+    // {
+    //   yearsActive: '1964-1982, 1989, 1996-present',
+    //   origin: 'London',
+    //   members: {
+    //     singer: 'Roger Daltrey',
+    //     guitarist: 'Pete Townshend',
+    //     bassGuitarist: 'John Entwistle',
+    //     drummer: 'Kenney Jones'
+    //   },
+    //   followers: 789489,
+    //   website: 'theWho.com',
+    //   active: true
+    // }
+
+//******converge, Nos permite aplicar una lista de funciones sobre el mismo objeto
+
+/* const theWho = {
+    yearsActive: '1964-1982, 1989, 1996-present',
+    origin: 'London',
+    demonym: 'British',
+    members: {
+        singer: 'Roger Daltrey',
+        guitarist: 'Pete Townshend',
+        bassGuitarist: 'John Entwistle',
+        drummer: 'Keith Moon'
+    },
+    followers: 787989,
+    website: null,
+    active: false
+} */
+
+let acdc = {
+    bandName: 'AC/DC',
+    yearsActive: '1973-present',
+    origin: 'Sydney',
+    demonym: 'Australian',
+    members: {
+        singer: 'Brian Johnson',
+        guitarist: 'Angus Young',
+        bassGuitarist: 'Stevie Young',
+        drummer: 'Chris Slade'
+    }
+}
+
+const pickSinger = R.path(['members', 'singer'])
+const pickDemonym = R.prop('demonym')
+const pickBandName = R.propOr('', 'bandName')
+const processBand = (singer, demonym, bandName) => `${singer} is the lead singer of the ${demonym} rock band ${bandName}`
+
+R.converge(processBand, [pickSinger, pickDemonym, pickBandName])(acdc)
+    // Brian Johnson is the lead singer of the Australian rock band AC/DC
+
+R.converge(processBand, [pickSinger, pickDemonym, pickBandName])(theWho)
+    // Roger Daltrey is the lead singer of the British rock band
 
 
-"CHORTCUT PARA GUARDAR Y SALIR
-nmap <Leader>w :w<CR> "genera un chortcut para guardar usando espacio y la letra
-nmap <Leader>q :q<CR>
-nmap <Leader>wq :wq<CR>
+//**************** __ Underscore, nos ayuda a saltar argumentos en caso de ser necesario
+const pickMetallicaProp = R.path(R.__, acdc)
+pickMetallicaProp(['members', 'singer'])
+    // Brian Johnson
+pickMetallicaProp(['origin'])
+    // Sydney
 
-" comandos de COC
-nmap <silent> gd <Plug>(coc-definition)
-nma <silent> gy <Plug>(coc-type-definition)
-nma <silent> gi <Plug>(coc-implementation)
-nma <silent> gr <Plug>(coc-references)
+//***********************Tap, Ejecuta la función que se pasa como argumento al objeto que se incluye también como argumento y devuelve el objeto inicial.
+const ledZeppelin = {
+    bandName: 'Led Zeppelin',
+    yearsActive: '1968-present',
+    origin: 'London',
+    demonym: 'United Kindom',
+    members: {
+        singer: 'Robert Plant',
+        guitarist: 'Jimmy Page',
+        bassGuitarist: 'John Paul Jones',
+        drummer: 'John Bonham'
+    }
+}
 
-if &filetype == "javascript" || &filetype == "python"
-	inoremap <c-space> <C-x><C-u>
-else
-	inoremap <silent><expr> <c-space> coc#refresh()
-endif
-" Autocompletar elemento seleccionado de la lista
-if exists('*complete_info')
-  inoremap <silent><expr> <cr> complete_info(['selected'])['selected'] != -1 ? "\<C-y>" : "\<C-g>u\<CR>"
-endif
+const trace = R.tap(console.log)
 
-"COMANDOS BUSQUEDA INCREMENTAL
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
+const doSomeStuffWithBand = R.compose(
+        trace, R.concat('Mr. '),
+        trace, R.head,
+        trace, R.reverse,
+        trace, R.split(' '),
+        trace, R.path(['members', 'drummer'])
+    ) // Recordemos que compose va de derecha a izquierda
+
+doSomeStuffWithBand(ledZeppelin)
+    // 'Mr. Bonham'
+
+//*********Memoize, Crea una nueva función que, cuando se invoca, almacena en caché el resultado de llamar fn a un conjunto de argumentos dado
+
+let count = 0
+const factorial = R.memoizeWith(R.identity, n => {
+    count++
+    return R.product(R.range(1, n + 1))
+})
+
+const factorialize = () => {
+    console.time('factorialize')
+    factorial(20000000)
+    console.timeEnd('factorialize')
+}
+
+factorialize() // factorialize: 790.96484375ms
+factorialize() // factorialize: 0.305908203125ms
+factorialize() // factorialize: 0.044677734375ms
+factorialize() // factorialize: 0.037841796875ms
+factorialize() // factorialize: 0.06396484375ms
+
+//**************Invoker
+
+fetch('https://api.spotify.com/v1/artists/5M52tdBnJaKSvOpJGz8mfZ')
+    .then(R.invoker(0, 'json'))
+    .then(R.pickAll(['name', 'popularity', 'type']))
+    // { 'name': 'Black Sabbath', 'popularity': 70, 'type': 'artist' }
 
 
-"CONFIGURACION VEM TABLINE
-"cierra la pestaña actual y devuelve a la anterior
-nnoremap <silent> <leader>q :lclose<bar>b#<bar>bd #<CR>
+//*********************************Logic, como cond, when, ifElse, or, not.
+const blackSabbath = { name: 'Black Sabbath', category: 'Heavy Metal', tour: 'The End', ticketPrice: 140 }
+const greenDay = { name: 'Green Day', category: 'Punk Rock', tour: '99 Revolutions Tour', ticketPrice: 80 }
+acdc = { name: 'AC/DC', category: 'Hard Rock', tour: 'Rock or Bust World Tour', ticketPrice: 200 }
+const rollingStones = { name: 'The Rolling Stones', category: 'Rock', tour: '', ticketPrice: 130 }
 
+const tours = [blackSabbath, greenDay, acdc, rollingStones]
 
-"CONFIGURACION AUTOFORMATEO
-noremap <F3> :Autoformat<CR>
-nmap <Leader>f :Autoformat<CR>
+//Cond, es similar a un switch case, recibe un lista con arrays de 2 elementos, predicado y transformación
+
+const assistanceChooser = R.cond([
+    [R.propEq('category', 'Rock'), band => `I'll assit to the ${band.name} concert`], // Es un concierto de categoría Rock?
+    [R.propSatisfies(R.lt(R.__, 100), 'ticketPrice'), R.always("As its cheap, I ll assist to the concert ")], // Es un concierto de menos de 100? [R.T, band => `I won'
+    [R.T, band => `I won't assist to ${band.name} concert`] // Default case
+])
+
+assistanceChooser(greenDay)
+    // 'As it's cheap, I'll assist to the concert'
+assistanceChooser(rollingStones)
+    // 'I'll assit to the The Rolling Stones concert'
+assistanceChooser(blackSabbath)
+    // 'I won't assist to Black Sabbath concert'
+
+//When, aplica la segunda función pasada como parámetro, si la primera devuelve true al ejecutarse contra el objeto.
+//Además aquí usamos allPass, para indicar que queremos aplicar una lista de condiciones y que todas se tienen que cumplir.
+
+const purchaseTicket = R.when(
+    R.allPass([
+        R.propEq('name', 'Black Sabbath'),
+        R.propSatisfies(R.lt(R.__, 150), 'ticketPrice')
+    ]),
+    R.assoc('ticketPurchased', true)
+)
+
+purchaseTicket(rollingStones)
+    // No aplica ninguna transformación, no cumple ninguna de las condiciones de allPass
+purchaseTicket(acdc)
+    // No aplica ninguna transformación, el precio es superior a 150
+purchaseTicket(blackSabbath)
+    // Cumple todas las condiciones, añade ticketPurchased al objeto resultante
+    // {'category': 'Heavy Metal', 'name': 'Black Sabbath', 'ticketPrice': 140, 'ticketPurchased': true, 'tour': 'The End'}
+
+//and, or, any, both, not, isEmpty…
+R.isEmpty(tours) // false, no esta vacio
+R.not(R.isEmpty(tours)) // true, no esta vacio
+R.not(R.isEmpty([])) // false, esta vacio
+
+//Type, grupo de funciones para hacer comprobaciones u obtener el tipo de dato
+R.is(Number, greenDay) // false
+R.is(Object, acdc) // true
